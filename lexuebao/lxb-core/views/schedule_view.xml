@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_lxb_schedule_tree" model="ir.ui.view">
+            <field name="name">lxb.schedule.tree</field>
+            <field name="model">lxb.schedule</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <tree string="排约课计划">
+                    <field name="name" />
+                    <field name="code" />
+                    <field name="start_date" />
+                    <field name="end_date" />
+                    <field name="course_id" />
+                </tree>
+            </field>
+        </record>
+        <record id="view_lxb_schedule_form" model="ir.ui.view">
+            <field name="name">lxb.schedule.form</field>
+            <field name="model">lxb.schedule</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string="排约课计划">
+                    <header groups="base.group_user">
+                        <button name="%(act_open_generate_time_table_view)d"
+                            string="批量创建排课计划" type="action"
+                            class="oe_highlight" context="{'schedule_id':id}"
+                            />
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h2>
+                                <field name="course_id" />
+                                <button type="object"
+                                       class="oe_right oe_stat_button"
+                                        id="timetable_button"
+                                        icon="fa-pencil-square-o"
+                                        name="action_view_timetable"
+                                        groups="lxb-core.group_lxb_back_office">
+                                        <div><strong><field name="timetable_lines_no" /><br/>排课明细</strong></div>
+                                </button>
+                            </h2>
+                            <h1>
+                                <field name="name" placeholder="排约课计划名称"/><br/>
+                                <field name="code" />
+                            </h1>
+                        </div>
+                        <group col="4" name="main">
+                            <field name="start_date" />
+                            <field name="end_date" />
+                        </group>
+                        <group col="4" name="main">
+                            <field name="company_id"/>
+                            <field name="type" readonly="1"/>
+                        </group>
+                        <group>
+                            <div><h3>1.课程为机构排课，则由机构管理人员排课；<br/>2.课程为学生选课则由学生选课后生成计划</h3></div>
+                        </group>
+                        <notebook colspan="4" invisible="1">
+                            <page string="时间表">
+                                <field name="schedule_line_ids" nolabel="1" colspan="4">
+                                    <tree name="TimeTable" editable="top">
+                                        <!-- <field name="class_date"/> -->
+                                        <field name="name" domain="[('company_id','=',parent.company_id)]"/>
+                                        <field name="subject_id" required="1" options='{"no_open":True,"no_create":True}'/>
+                                        <field name="start_datetime"/>
+                                        <field name="end_datetime"/>
+                                        <field name="teacher_id" required="1" options='{"no_open":True,"no_create":True}'/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <!--
+                        <notebook colspan="4">
+                            <page string="班级">
+                                <field name="class_ids" nolabel="1" colspan="4">
+                                    <tree name="班级" editable="top">
+                                        <field name="name" domain="[('company_id','=',parent.company_id)]"/>
+                                        <field name="class_advisor"/>
+                                        <field name="student_no"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        -->
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_lxb_schedule_search" model="ir.ui.view">
+            <field name="name">lxb.schedule.search</field>
+            <field name="model">lxb.schedule</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <search string="排约课计划">
+
+                    <field name="code" />
+                    <field name="name" />
+                    <field name="start_date" />
+                    <field name="end_date" />
+                    <field name="course_id" />
+                    <newline />
+                    <group expand="0" string="分组，按照...">
+                        <filter string="开始日期" domain="[]"
+                            context="{'group_by':'start_date'}" />
+                        <filter string="结束日期" domain="[]" context="{'group_by':'end_date'}" />
+                        <filter string="课程" domain="[]" context="{'group_by':'course_id'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="act_open_lxb_schedule_view">
+            <field name="name">排约课计划</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">lxb.schedule</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_lxb_schedule_search" />
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_lxb_schedule_view_form">
+            <field name="act_window_id" ref="act_open_lxb_schedule_view" />
+            <field name="sequence" eval="20" />
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_lxb_schedule_form" />
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_lxb_schedule_view_tree">
+            <field name="act_window_id" ref="act_open_lxb_schedule_view" />
+            <field name="sequence" eval="10" />
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_lxb_schedule_tree" />
+        </record>
+    </data>
+</odoo>

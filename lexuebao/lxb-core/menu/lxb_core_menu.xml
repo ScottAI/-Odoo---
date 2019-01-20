@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- lxb Menu -->
+        <menuitem id="menu_lxb_school_root" name="教务中心"
+            sequence="10"
+            web_icon="lxb-core,static/description/icon.png" />
+        <!-- 该菜单为教务操作人员设计，所以groups=group_lxb_back_office,group_lxb_back_office_admin   -->
+        <menuitem id="menu_lxb_school_main" name="学生管理" parent="menu_lxb_school_root"
+            sequence="10"
+            groups="group_lxb_back_office,group_lxb_back_office_admin" />
+        <menuitem id="menu_lxb_student_sub" name="学生" parent="menu_lxb_school_main" sequence="10"
+            action="act_open_lxb_student_view" groups="group_lxb_back_office,group_lxb_back_office_admin" />
+
+        <!-- 该菜单为教务操作人员设计，所以groups=group_lxb_back_office,group_lxb_back_office_admin   -->
+        <menuitem id="menu_lxb_teacher_main" name="教师管理"
+            parent="menu_lxb_school_root" sequence="20"
+            groups="group_lxb_back_office,group_lxb_back_office_admin" />
+        <menuitem id="menu_lxb_teacher_sub" name="教师" parent="menu_lxb_teacher_main" sequence="10"
+            action="act_open_lxb_teacher_view" groups="group_lxb_back_office,group_lxb_back_office_admin" />
+
+        <menuitem id="menu_lxb_school_course" name="课程管理" parent="menu_lxb_school_root" sequence="30"/>
+        <menuitem id="menu_lxb_course_sub" name="课程" parent="menu_lxb_school_course" sequence="10"
+            action="act_open_lxb_course_view" groups="group_lxb_back_office,group_lxb_back_office_admin" />
+        <menuitem id="menu_lxb_schedule_sub" name="排课计划" parent="menu_lxb_school_course" sequence="20"
+            action="act_open_lxb_schedule_view" groups="group_lxb_back_office,group_lxb_back_office_admin" />
+        <menuitem id="menu_lxb_school_subject" name="科目管理" parent="menu_lxb_school_root" sequence="40"/>
+        <menuitem id="menu_lxb_subject_sub" name="科目" sequence="10" parent="menu_lxb_school_subject"
+            action="act_open_lxb_subject_view" groups="group_lxb_back_office,group_lxb_back_office_admin,lxb-core.group_lxb_teacher" />
+        <menuitem id="menu_lxb_general_main" name="通用" parent="menu_lxb_school_root" sequence="90"/>
+
+        <!-- Configuration Menu -->
+        <menuitem id="menu_lxb_school_config" name="配置" parent="menu_lxb_school_root" sequence="100"/>
+        <menuitem id="menu_lxb_school_config_general" name="通用管理" parent="menu_lxb_school_config" sequence="80"/>
+        <!-- 有些不用的M菜单显示在前端非常混乱，不想给用户显示，所以做以下处理 -->
+        <record id="hideme" model="res.groups">
+            <field name="category_id" ref="base.module_category_hidden" />
+            <field name="name">hideme</field>
+        </record>
+    </data>
+</odoo>

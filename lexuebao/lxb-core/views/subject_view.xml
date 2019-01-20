@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_lxb_subject_tree" model="ir.ui.view">
+            <field name="name">lxb.subject.tree</field>
+            <field name="model">lxb.subject</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <tree string="科目">
+                    <field name="name" />
+                    <field name="code" />
+                    <field name="type" />
+                    <field name="subject_type" />
+                </tree>
+            </field>
+        </record>
+        <record id="view_lxb_subject_form" model="ir.ui.view">
+            <field name="name">lxb.subject.form</field>
+            <field name="model">lxb.subject</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string="科目">
+                    <sheet>
+                        <group col="4">
+                            <field name="name" />
+                            <field name="code" />
+                            <field name="type" />
+                            <field name="subject_type" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_lxb_subject_search" model="ir.ui.view">
+            <field name="name">lxb.subject.search</field>
+            <field name="model">lxb.subject</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <search string="科目">
+                    <field name="name" />
+                    <field name="code" />
+                    <field name="type" />
+                    <newline />
+                    <group expand="0" string="分组，按照...">
+                        <filter string="Type" domain="[]"
+                            context="{'group_by':'type'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="act_open_lxb_subject_view">
+            <field name="name">科目</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">lxb.subject</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_lxb_subject_search" />
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_lxb_subject_view_form">
+            <field name="act_window_id" ref="act_open_lxb_subject_view" />
+            <field name="sequence" eval="20" />
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_lxb_subject_form" />
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_lxb_subject_view_tree">
+            <field name="act_window_id" ref="act_open_lxb_subject_view" />
+            <field name="sequence" eval="10" />
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_lxb_subject_tree" />
+        </record>
+    </data>
+</odoo>

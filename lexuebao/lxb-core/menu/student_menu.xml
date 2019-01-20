@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_lxb_student_root" name="学生"
+            sequence="25"
+            web_icon="lxb-core,static/description/icon_student.png" />
+
+        <menuitem id="menu_lxb_student_main_student" name="简历"
+            parent="menu_lxb_student_root" sequence="20"
+            action="act_open_lxb_student_view" groups="group_lxb_student" />
+
+        <menuitem id="menu_lxb_general_student" parent="menu_lxb_student_root"
+            sequence="20" name="通用" />
+
+    </data>
+</odoo>

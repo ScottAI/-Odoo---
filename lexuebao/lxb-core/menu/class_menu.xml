@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <menuitem id="menu_lxb_school_config_class" name="班级管理" parent="menu_lxb_school_root" sequence="50"/>
+        <menuitem id="menu_lxb_class_sub" name="班级"
+            parent="menu_lxb_school_config_class" sequence="10"
+            action="act_open_lxb_class_view" groups="lxb-core.group_lxb_back_office,lxb-core.group_lxb_back_office_admin" />
+
+    </data>
+</odoo>

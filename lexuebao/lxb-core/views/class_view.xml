@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_lxb_class_tree" model="ir.ui.view">
+            <field name="name">lxb.class.tree</field>
+            <field name="model">lxb.class</field>
+            <field name="arch" type="xml">
+                <tree string="班级">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="class_advisor"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_lxb_class_form" model="ir.ui.view">
+            <field name="name">lxb.class.form</field>
+            <field name="model">lxb.class</field>
+            <field name="arch" type="xml">
+                <form string="班级">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="class_advisor"/>
+                            <field name="company_id"/>
+                            <field name="student_no"/>
+                        </group>
+                        <group string="详细地址">
+                            <field name="specific_site" nolabel="1" />
+                        </group>
+                        <group string="学生">
+                            <field name="student_ids" nolabel="1" widget="one2many_list" mode="tree,kanban">
+                                <tree string="学生" editable="bottom">
+                                    <field name="id"/>
+                                    <field name="gr_no"/>
+                                    <field name="name"/>
+                                    <field name="company_id"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_lxb_class_search" model="ir.ui.view">
+            <field name="name">lxb.class.search</field>
+            <field name="model">lxb.class</field>
+            <field name="arch" type="xml">
+                <search string="班级">
+                    <field name="name"/>
+                    <newline/>
+                    <group expand="0" string="分组,按照">
+                        <filter name="name" string="名称"
+                                domain="[]" context="{'group_by':'name'}"/>
+                        <filter name="class_advisor" string="班主任"
+                                domain="[]" context="{'group_by':'class_advisor'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="act_open_lxb_class_view">
+            <field name="name">班级</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">lxb.class</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_lxb_class_search"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_lxb_class_view_form">
+            <field name="act_window_id" ref="act_open_lxb_class_view"/>
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_lxb_class_form"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_lxb_class_view_tree">
+            <field name="act_window_id" ref="act_open_lxb_class_view"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_lxb_class_tree"/>
+        </record>
+    </data>
+</odoo>

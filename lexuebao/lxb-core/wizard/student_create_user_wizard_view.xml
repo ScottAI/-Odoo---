@@ -1,0 +1,28 @@
+<odoo>
+
+    <data>
+        <record id="lxb_student_user_create_view" model="ir.ui.view">
+            <field name="name">wizard.lxb.student.form</field>
+            <field name="model">wizard.lxb.student</field>
+            <field name="arch" type="xml">
+                <form string="Create Users">
+                    <p class="oe_grey">
+                        为选中的学生创建用户
+                    </p>
+                    <separator string="学生" colspan="4" />
+                    <field name="student_ids" widget="many2many_tags" readonly="1" />
+                    <footer>
+                        <button string="创建用户" name="create_student_user" type="object"
+                            default_focus="1" class="oe_highlight" />
+                        or
+                        <button string="取消" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_student_user_create_view" multi="True"
+            name="创建用户" res_model="wizard.lxb.student" src_model="lxb.student"
+            view_mode="form" target="new" view_type="form" />
+    </data>
+</odoo>

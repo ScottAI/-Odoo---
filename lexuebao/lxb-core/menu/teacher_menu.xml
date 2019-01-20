@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <menuitem id="menu_lxb_teacher_root" name="教师"
+            sequence="20"
+            web_icon="lxb-core,static/description/icon_faculty.png" />
+
+    </data>
+</odoo>

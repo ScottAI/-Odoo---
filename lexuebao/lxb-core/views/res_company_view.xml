@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_company_form_lexuebao_core" model="ir.ui.view">
+            <field name="name">res.company.form.lxb.core</field>
+            <field name="model">res.company</field>
+            <field name="priority">99</field>
+            <field name="inherit_id" ref="base.view_company_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']" position="after">
+                    <field name="institute_type" required="1"/>
+                    <field name="signature" widget="image" />
+                </xpath>
+                <notebook colspan="4" position="inside">
+                    <page name="institute_detail" string="机构详细资料">
+                        <separator string="资格鉴定"
+                            colspan="4" />
+                        <field name="accreditation" colspna="4"
+                            nolabel="1" />
+                        <separator string="核准"
+                            colspan="4" />
+                        <field name="approval_authority" colspna="4"
+                            nolabel="1" />
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record id="view_inherit_user_form_lxb_core" model="ir.ui.view">
+            <field name="name">res.user.form.lxb.core</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="child_ids" widget="many2many_tags" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

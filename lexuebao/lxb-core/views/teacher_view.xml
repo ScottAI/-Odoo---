@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="kanban_view_teacher">
+            <field name="name">教师看板</field>
+            <field name="model">lxb.teacher</field>
+            <field name="arch" type="xml">
+                <kanban class="o_res_partner_kanban">
+                    <field name="id"/>
+                    <field name="image"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_res_partner_kanban">
+                                <div class="o_kanban_image">
+                                    <t t-if="record.image.value">
+                                        <img t-att-src="kanban_image('lxb.teacher', 'image', record.id.value)"/>
+                                    </t>
+                                    <t t-if="!record.image.value">
+                                        <img t-att-src='_s + "/base/static/src/img/avatar.png"'/>
+                                    </t>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <h4>
+                                        <a type="open">
+                                            <field name="name" />
+                                        </a>
+                                    </h4>
+                                    <ul>
+                                        <li t-if="record.contact_address.raw_value">
+                                            <field name="contact_address" />
+                                        </li>
+                                        <li t-if="record.phone.raw_value">
+                                            <field name="phone" />
+                                        </li>
+                                        <li t-if="record.mobile.raw_value">
+                                            <field name="mobile" />
+                                        </li>
+                                        <li t-if="record.email.raw_value">
+                                            <a t-attf-href="mailto:#{record.email.value}">
+                                                <field name="email" />
+                                            </a>
+                                        </li>
+                                        <li t-if="record.company_id.raw_value">
+                                            <field name="company_id" />
+                                        </li>
+                                        <li t-if="record.lang.raw_value">
+                                            <field name="lang" />
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="view_lxb_teacher_tree" model="ir.ui.view">
+            <field name="name">lxb.teacher.tree</field>
+            <field name="model">lxb.teacher</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <tree string="教师">
+                    <field name="title" />
+                    <field name="name" />
+                    <field name="emergency_contact" />
+                </tree>
+            </field>
+        </record>
+        <record id="view_lxb_teacher_form" model="ir.ui.view">
+            <field name="name">lxb.faculty.form</field>
+            <field name="model">lxb.teacher</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string="Faculty">
+                <header groups="lxb-core.group_lxb_back_office_admin">
+                    <button name="%(teacher_create_employee_act)d" string="新建员工" type="action" class="oe_highlight" attrs="{'invisible': [('emp_id', '!=', False)]}"/>
+                </header>
+                    <sheet>
+                        <field name="image" widget="image" class="oe_left oe_avatar" />
+                        <div class="oe_title">
+                            <h1>
+                                <field name="title" placeholder="Title" style="width: 30%%" />
+                            </h1>
+                            <h1><table>
+                                <tr>
+                                <td style="padding-right:10px"><field name="name" required="1" placeholder="姓名" /></td>
+                                </tr>
+                                </table>
+                            </h1>
+                        </div>
+                        <group col="6" colspan="2">
+                            <field name="gender" />
+                            <field name="phone" size="15"/>
+                            <field name="mobile" size="15"/>
+                            <field name="email" />
+                        </group>
+                        <notebook colspan="4">
+                            <page name="personal_information" string="个人信息">
+                                <group col="4">
+                                    <field name="birth_date" />
+                                    <field name="nationality" string="国家" />
+                                    <field name="visa_info" sring="工资卡号"/>
+                                    <field name="lang" />
+                                    <field name="emergency_contact" string="紧急联系人" context="{'show_address': 1}"
+                                        options='{"always_reload": True}' />
+                                    <field name='emp_id' />
+                                    <field name="company_id"/>
+                                </group>
+                                <group string="地址信息" name="address">
+                                    <label for="type" />
+                                    <div name="div_type">
+                                        <field class="oe_inline" name="type" />
+                                    </div>
+                                    <label for="street" string="地址" />
+                                    <div name="div_address">
+                                        <field name="street" placeholder="Street..." />
+                                        <field name="street2" placeholder="Street2" />
+                                        <div class="address_format">
+                                            <field name="city" placeholder="City" style="width: 40%%" />
+                                            <field name="state_id" class="oe_no_button"
+                                                placeholder="State" style="width: 37%%" options='{"no_open": True}' />
+                                            <field name="zip" placeholder="ZIP" style="width: 20%%" />
+                                        </div>
+                                        <field name="country_id" placeholder="Country" class="oe_no_button"
+                                            options='{"no_open": True}' />
+                                    </div>
+                                </group>
+                            </page>
+                            <page name="subjects" string="可授科目">
+                                <field name="teacher_subject_ids" colspan="4" nolabel="1" />
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_lxb_teacher_search" model="ir.ui.view">
+            <field name="name">lxb.teacher.search</field>
+            <field name="model">lxb.teacher</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <search string="教师">
+                    <field name="name" />
+                    <newline />
+                    <group expand="0" string="分组，按照...">
+                        <filter name="nationality" string="国家" domain="[]"
+                            context="{'group_by':'nationality'}" />
+                        <filter name="language" string="语言" domain="[]" context="{'group_by':'lang'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="act_open_lxb_teacher_view">
+            <field name="name">教师</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">lxb.teacher</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="view_lxb_teacher_search" />
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_lxb_teacher_view_form">
+            <field name="act_window_id" ref="act_open_lxb_teacher_view" />
+            <field name="sequence" eval="20" />
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_lxb_teacher_form" />
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_lxb_teacher_view_tree">
+            <field name="act_window_id" ref="act_open_lxb_teacher_view" />
+            <field name="sequence" eval="10" />
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_lxb_teacher_tree" />
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_lxb_teacher_view_kanban">
+            <field name="act_window_id" ref="act_open_lxb_teacher_view" />
+            <field name="sequence" eval="5" />
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="kanban_view_teacher" />
+        </record>
+    </data>
+</odoo>

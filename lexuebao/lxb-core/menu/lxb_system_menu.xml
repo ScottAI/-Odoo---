@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+            id="menu_system_root"
+            name="系统配置"
+            groups="group_lxb_back_office_admin"
+            sequence="100"/>
+</odoo>

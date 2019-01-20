@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="lxb_teacher_create_employee_view" model="ir.ui.view">
+            <field name="name">wizard.lxb.teacher.employee.form</field>
+            <field name="model">wizard.lxb.teacher.employee</field>
+            <field name="arch" type="xml">
+                <form string="填写雇佣相关信息">
+                    <group col="4">
+                        <field name="user_boolean" />
+                    </group>
+                    <footer groups="base.group_user">
+                        <button name="create_employee" type="object" string="新建员工" class="oe_highlight" />
+                        <button string="Cancel" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="teacher_create_employee_act">
+            <field name="name">Create Employee</field>
+            <field name="res_model">wizard.lxb.teacher.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="lxb_teacher_create_employee_view" />
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

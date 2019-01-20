@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="kanban_view_student" model="ir.ui.view">
+            <field name="name">Student Kanban</field>
+            <field name="model">lxb.student</field>
+            <field name="arch" type="xml">
+                <kanban class="o_res_partner_kanban">
+                    <field name="id"/>
+                    <field name="image"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click o_res_partner_kanban">
+                                <div class="o_kanban_image">
+                                    <t t-if="record.image.value">
+                                        <img t-att-src="kanban_image('lxb.student', 'image', record.id.value)"/>
+                                    </t>
+                                    <t t-if="!record.image.value">
+                                        <img t-att-src='_s + "/base/static/src/img/avatar.png"'/>
+                                    </t>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <h4>
+                                        <a type="open">
+                                            <field name="name"/>
+                                        </a>
+                                    </h4>
+                                    <ul>
+                                        <li t-if="record.contact_address.raw_value">
+                                            <field name="contact_address"/>
+                                        </li>
+                                        <li t-if="record.phone.raw_value">
+                                            <field name="phone"/>
+                                        </li>
+                                        <li t-if="record.mobile.raw_value">
+                                            <field name="mobile"/>
+                                        </li>
+                                        <li t-if="record.email.raw_value">
+                                            <a t-attf-href="mailto:#{record.email.value}">
+                                                <field name="email"/>
+                                            </a>
+                                        </li>
+                                        <li t-if="record.company_id.raw_value">
+                                            <field name="company_id"/>
+                                        </li>
+                                        <li t-if="record.lang.raw_value">
+                                            <field name="lang"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_lxb_student_tree" model="ir.ui.view">
+            <field name="name">lxb.student.tree</field>
+            <field name="model">lxb.student</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="学生">
+                    <field name="gr_no"/>
+                    <field name="name"/>
+                    <field name="emergency_contact"/>
+                    <field name="nationality" />
+                    <field name="company_id"/>
+                    <field name="course_detail_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_lxb_student_form" model="ir.ui.view">
+            <field name="name">lxb.student.form</field>
+            <field name="model">lxb.student</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form string="学生">
+                    <sheet>
+                        <div class="oe_title">
+                            <field name="already_partner"/>
+                            <label string="老学员？"/>
+                            <field name="partner_id" placeholder="Partner" options="{'no_create_edit': True}"
+                                   attrs="{'required':[('already_partner','=',True)],'invisible': [('already_partner','=', False)]}"/>
+                        </div>
+                        <field name="image" widget="image" class="oe_left oe_avatar"/>
+                        <div class="oe_title">
+                            <h1>
+                                <table>
+                                    <tr>
+                                        <td style="padding-right:10px;">
+                                            <field name="name" required="1" placeholder="姓名"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </h1>
+                        </div>
+                        <notebook colspan="4">
+                            <page name="personal_information"
+                                  string="个人信息">
+                                <group col="4" colspan="4"
+                                       name="personal_detail">
+                                    <field name="gender" required="1"/>
+                                    <field name="birth_date" required="1"/>
+                                    <field name="nationality"/>
+                                    <field name="lang"/>
+                                    <field name="emergency_contact"
+                                           context="{'show_address': 1}"
+                                           options='{"always_reload": True}'/>
+                                    <field name="user_id" string="User" readonly="1"/>
+                                    <field name="email" />
+                                </group>
+                                <group string="地址信息"
+                                       name="address">
+                                    <label for="type"/>
+                                    <div name="div_type">
+                                        <field class="oe_inline"
+                                               name="type"/>
+                                    </div>
+                                    <label for="street" string="地址"/>
+
+                                    <div name="div_address">
+                                        <field name="street"
+                                               placeholder="Street..."/>
+                                        <field name="street2"
+                                               placeholder="Street2"/>
+                                        <div class="address_format">
+                                            <field name="city"
+                                                   placeholder="City"
+                                                   style="width: 40%%"/>
+
+                                            <field name="state_id"
+                                                   class="oe_no_button"
+                                                   placeholder="State"
+                                                   style="width: 37%%"
+                                                   options='{"no_open": True}'/>
+                                            <field name="zip"
+                                                   placeholder="ZIP"
+                                                   style="width: 20%%"/>
+                                        </div>
+                                        <field name="country_id"
+                                               placeholder="Country" class="oe_no_button"
+                                               options='{"no_open": True}'/>
+                                    </div>
+                                </group>
+                            </page>
+                            <page name="educational" string="教育信息">
+                                <group col="4" colspan="4">
+
+                                    <field name="gr_no" required="1"/>
+                                    <field name="company_id"/>
+                                    <field name="class_id" />
+                                </group>
+                                <group>
+                                    <separator string="入学信息"
+                                               colspan="4"/>
+                                    <field name="course_detail_ids"
+                                           nolabel="1">
+                                        <tree string="课程信息">
+                                            <field name="course_id" domain="[('company_id','=',parent.company_id)]"/>
+                                            <field name="schedule_id" domain="[('course_id', '=', course_id)]"/>
+                                            <field name="subject_ids" widget="many2many_tags"/>
+                                        </tree>
+                                        <form>
+                                            <group cols="2" colspan="2">
+                                                <field name="course_id" domain="[('company_id','=',parent.company_id)]"/>
+                                                <field name="schedule_id" domain="[('course_id', '=', course_id)]"/>
+                                                <field name="roll_number"/>
+                                            </group>
+                                            <group col="4" string="Subjects">
+                                                <field name="subject_ids" colspan="4" nolabel="1"/>
+                                            </group>
+                                        </form>
+                                    </field>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_lxb_student_search" model="ir.ui.view">
+            <field name="name">lxb.student.search</field>
+            <field name="model">lxb.student</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search string="学生">
+                    <field name="name"/>
+
+                    <newline/>
+                    <group expand="0" string="Group By...">
+
+                        <filter name="nationality" string="国家"
+                                domain="[]" context="{'group_by':'nationality'}"/>
+                        <filter name="language" string="Language"
+                                domain="[]" context="{'group_by':'lang'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="act_open_lxb_student_view">
+            <field name="name">学生</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">lxb.student</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="view_lxb_student_search"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_lxb_student_view_form">
+            <field name="act_window_id" ref="act_open_lxb_student_view"/>
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_lxb_student_form"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_lxb_student_view_tree">
+            <field name="act_window_id" ref="act_open_lxb_student_view"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_lxb_student_tree"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_lxb_student_view_kanban">
+            <field name="act_window_id" ref="act_open_lxb_student_view"/>
+            <field name="sequence" eval="5"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="kanban_view_student"/>
+        </record>
+    </data>
+</odoo>

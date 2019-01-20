@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_lxb_course_tree" model="ir.ui.view">
+            <field name="name">lxb.course.tree</field>
+            <field name="model">lxb.course</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <tree string="课程">
+                    <field name="name" />
+                    <field name="code" />
+                    <field name="section" />
+                    <field name="evaluation_type" />
+                    <field name="serve_type" />
+                    <field name="parent_id" />
+                    <field name="company_id" />
+                    <field name="subject_ids" widget="many2many_tags" />
+                </tree>
+            </field>
+        </record>
+        <record id="view_lxb_course_form" model="ir.ui.view">
+            <field name="name">lxb.course.form</field>
+            <field name="model">lxb.course</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string="课程">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1 attrs="{'invisible':[('code','=',False)]}">
+                                <field name="code" placeholder="课程编码" readonly='1'  style="width: 30%%" />
+                            </h1>
+                            <h1>
+                                <field name="name" placeholder="课程名称" style="width: 70%%" />
+                            </h1>
+                        </div>
+                        <group colspan="4" col="4" name="main">
+                            <field name="section" />
+                            <field name="evaluation_type" />
+                            <field name="parent_id" />
+                            <field name="company_id" />
+                            <field name="serve_type" />
+                            <field name="pay_type" /><!-- 只有当付费方式为预付费时，才出现付费项目 -->
+                        </group>
+                        <group string="科目" name="subject">
+                            <field name="subject_ids" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_lxb_course_search" model="ir.ui.view">
+            <field name="name">lxb.course.search</field>
+            <field name="model">lxb.course</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <search string="课程">
+                    <field name="name" />
+                    <field name="code" />
+<!--                    <field name="section" /> -->
+                    <field name="evaluation_type" />
+                    <field name="parent_id" />
+                    <newline />
+                    <group expand="0" string="Group By...">
+                        <filter string="Evaluation Type" domain="[]"
+                            context="{'group_by':'evaluation_type'}" />
+                        <filter string="Parent Course" domain="[]"
+                            context="{'group_by':'parent_id'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="act_open_lxb_course_view">
+            <field name="name">课程</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">lxb.course</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_lxb_course_search" />
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_lxb_course_view_form">
+            <field name="act_window_id" ref="act_open_lxb_course_view" />
+            <field name="sequence" eval="20" />
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_lxb_course_form" />
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_lxb_course_view_tree">
+            <field name="act_window_id" ref="act_open_lxb_course_view" />
+            <field name="sequence" eval="10" />
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_lxb_course_tree" />
+        </record>
+    </data>
+</odoo>

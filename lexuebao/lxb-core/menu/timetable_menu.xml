@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--
+        <menuitem id="menu_lxb_timetable_root" name="TimeTables"
+            sequence="90" web_icon="openeducat_timetable,static/description/icon.png" />
+        -->
+        <menuitem id="menu_lxb_timetable" string="排课计划明细表" name="排课计划明细表"
+            parent="menu_lxb_school_course" groups="lxb-core.group_lxb_student"
+            sequence="15" action="act_open_lxb_session_view" />
+
+        <!-- Configuration Menu -->
+        <menuitem id="menu_lxb_timetable_config" name="排课配置" parent="menu_lxb_school_config" sequence="40"/>
+
+        <menuitem id="menu_lxb_period" string="时间轴" name="时间轴"
+            parent="menu_lxb_timetable_config" groups="lxb-core.group_lxb_teacher"
+            sequence="10" action="act_open_lxb_timing_view" />
+        <menuitem id="menu_generate_time_table" string="生成排课计划明细表" name="生成排课计划明细表"
+            parent="menu_lxb_timetable_config" groups="lxb-core.group_lxb_back_office"
+            sequence="20" action="act_open_generate_time_table_view" />
+        <menuitem id="menu_generate_time_table_report" string="生成计划明细表报表"
+            parent="menu_lxb_timetable_config" groups="lxb-core.group_lxb_student"
+            sequence="30" action="act_open_time_table_report_view" />
+        <menuitem id="menu_session_analysis_pivot" name="课程分析"
+            parent="menu_lxb_school_course" sequence="50"
+            action="act_open_lxb_session_view_pivot" />
+
+    </data>
+</odoo>
