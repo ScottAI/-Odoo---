@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_lxb_invoice_tree_inherit" model="ir.ui.view">
+            <field name="name">lxb.product.product.tree.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree" />
+            <field name="priority" eval="9" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='number']" position="after">
+                    <field name="no_sessions" />
+                </xpath>
+            </field>
+        </record>
+        <record id="view_lxb_invoice_form_inherit" model="ir.ui.view">
+            <field name="name">lxb.account.invoice.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form" />
+            <field name="priority" eval="9" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="no_sessions"/>
+                    <field name="reference_contract"/>
+                </xpath>
+                <xpath expr="//field[@name='sent']" position="after">
+                    <group name="total_amount" string="发票总金额" class="oe_subtotal_footer oe_left">
+                            <field name="lxb_amount_untaxed" />
+                            <field name="lxb_amount_tax" />
+                            <field name="lxb_amount_total"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="发票课程明细">
+                            <field name="invoice_course_line_ids" nolabel="1" widget="one2many_list"
+                                   mode="tree,kanban" context="{'type': type, 'journal_id': journal_id, 'default_invoice_id': id}">
+                                <tree string="发票课程明细" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="course_id"/>
+                                    <field name="course_desc"/>
+                                    <field name="class_hours"/>
+                                    <field name="amount_ex"/>
+                                    <field name="discount" string="折扣(%)" />
+                                    <field name="invoice_line_tax_ids" string="税" widget="many2many_tags" options="{'no_create': True}" context="{'type':parent.type}"
+                                        domain="[('type_tax_use','=','sale'),('company_id', '=', parent.company_id)]"/>
+                                    <field name="amount_ex_af"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </tree>
+                                <kanban class="o_kanban_mobile">
+                                    <field name="course_id"/>
+                                    <field name="price_subtotal"/>
+                                    <field name="class_hours"/>
+                                    <template>
+                                        <t t-name="kanban-box">
+                                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <strong><span><t t-esc="record.course_id.value or 'None'"/></span></strong>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-8 text-muted">
+                                                        <span><t t-esc="record.class_hours.value"/></span>
+                                                    </div>
+                                                    <div class="col-xs-4 text-muted">
+                                                        <span class="text-right"><t t-esc="record.price_subtotal.value"/></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </template>
+                                </kanban>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="course_amount_untaxed"/>
+                                <field name="course_amount_tax"/>
+                                <field name="course_amount_total" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+        <!-- 继承修改看板视图 -->
+        <record id="lxb_invoice_kanban_inherit" model="ir.ui.view">
+            <field name="name">lxb.account.invoice.kanban.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_kanban"/>
+            <field name="arch" type="xml">
+                <field name="amount_total_signed" position="replace">
+                    <field name="lxb_amount_total" widget="monetary"/>
+                </field>
+            </field>
+        </record>
+        <!-- 继承修改日历视图 -->
+        <record id="lxb_view_invoice_line_calendar_inherit" model="ir.ui.view">
+            <field name="name">lxb.account.invoice.calendar.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_invoice_line_calendar"/>
+            <field name="arch" type="xml">
+                <field name="amount_total_signed" position="replace">
+                    <field name="lxb_amount_total" widget="monetary"/>
+                </field>
+            </field>
+        </record>
+        <!-- 继承修改数据透视视图 -->
+        <record id="lxb_view_invoice_pivot_inherit" model="ir.ui.view">
+            <field name="name">lxb.account.invoice.pivot.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_invoice_pivot"/>
+            <field name="arch" type="xml">
+                <field name="amount_total_signed" position="replace">
+                    <field name="lxb_amount_total" widget="monetary"/>
+                </field>
+            </field>
+        </record>
+        <!-- 继承修改图像视图 -->
+        <record id="lxb_view_invoice_graph_inherit" model="ir.ui.view">
+            <field name="name">lxb.account.invoice.graph.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_invoice_graph"/>
+            <field name="arch" type="xml">
+                <field name="amount_total_signed" position="replace">
+                    <field name="lxb_amount_total" widget="monetary"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_lxb_invoice_search_inherit" model="ir.ui.view">
+            <field name="name">lxb.account.invoice.search.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter" />
+            <field name="priority" eval="9" />
+            <field name="arch" type="xml">
+                <field name="journal_id" position="after">
+                    <field name="reference_contract"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_lxb_invoice_view">
+            <field name="name">开票</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field name="search_view_id" ref="view_lxb_invoice_search_inherit" />
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_lxb_invoice_view_tree">
+            <field name="act_window_id" ref="act_open_lxb_invoice_view" />
+            <field name="sequence" eval="10" />
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_lxb_invoice_tree_inherit" />
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_lxb_invoice_view_form">
+            <field name="act_window_id" ref="act_open_lxb_invoice_view" />
+            <field name="sequence" eval="20" />
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_lxb_invoice_form_inherit" />
+        </record>
+
+    </data>
+</odoo>
