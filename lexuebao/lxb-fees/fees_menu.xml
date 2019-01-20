@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem id="menu_lxb_fees_root" name="费用中心"
+            sequence="30"  />
+
+    <menuitem id="menu_lxb_fees_submenu" name="费用"
+            sequence="20" parent="menu_lxb_fees_root"/>
+
+    <menuitem id="menu_fees_invoice" name="发票管理"
+            groups="lxb-core.group_lxb_back_office,lxb-core.group_lxb_back_office_admin"
+            sequence="20" parent="menu_lxb_fees_submenu" action="lxb-fees.act_open_lxb_invoice_view" />
+        <menuitem id="menu_fees_payment" name="定金/收付款"
+            groups="lxb-core.group_lxb_back_office,lxb-core.group_lxb_back_office_admin"
+            sequence="30" parent="menu_lxb_fees_submenu" action="lxb-fees.act_open_lxb_payment_view" />
+
+</odoo>
