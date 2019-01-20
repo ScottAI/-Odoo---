@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="view_lxb_crm_partners_form_inherit" model="ir.ui.view">
+            <field name="name">view.lxb.partner.form.crm.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="crm.view_partners_form_crm1"/>
+
+            <field name="arch" type="xml">
+                <field name="website" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="category_id" position="after">
+                    <field name="relation_type" />
+                </field>
+                <field name="category_id" position="after">
+                    <field name="relation_with_stu" attrs="{'invisible':[('type','=','studentself')]}"/>
+                </field>
+
+                <field name="email" position="after">
+                    <field name="company_id"/>
+                </field>
+                <page name="sales_purchases"  position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </page>
+                <page name="internal_notes" position="after">
+                    <page string="学生视图信息">
+                        <field name="student_ids"
+                               context="{'kanban_view_ref':'lxb-core.kanban_view_student',
+                               'form_view_ref':'lxb-core.view_lxb_student_form'}"/>
+                    </page>
+                </page>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

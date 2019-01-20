@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <menuitem
+            id="lxb-crm.crm_menu_root"
+            name="客户运营中心"
+            web_icon="crm,static/description/icon.png"
+            groups="sales_team.group_sale_salesman,sales_team.group_sale_manager"
+            />
+
+        <menuitem
+            id="lxb-crm.crm_menu_config"
+            name="配置"
+            parent="lxb-crm.crm_menu_root"
+            groups="sales_team.group_sale_manager"
+            sequence="99" />
+
+        <menuitem
+            id="lxb-crm.menu_crm_config_lead"
+            name="机会和线索"
+            parent="lxb-crm.crm_menu_config"
+            sequence="15"
+            groups="sales_team.group_sale_manager"
+            />
+
+        <menuitem
+            id="lxb-crm.menu_crm_lead_categ"
+            name="线索标签"
+            action="crm.crm_lead_tag_action"
+            parent="lxb-crm.menu_crm_config_lead"
+            sequence="1"/>
+
+        <menuitem
+                name="丢客原因"
+            id="lxb-crm.menu_crm_lost_reason"
+            action="crm.crm_lost_reason_action"
+            parent="lxb-crm.menu_crm_config_lead"
+            sequence="6"/>
+
+        <menuitem
+            id="lxb-crm.menu_crm_config_opportunity"
+            name="机会"
+            parent="lxb-crm.crm_menu_config"
+            sequence="1"
+            groups="sales_team.group_sale_manager"
+            />
+
+        <menuitem id="lxb-crm.crm_config_settings_menu"
+            name="设置"
+            parent="lxb-crm.crm_menu_config"
+            action="crm.crm_config_settings_action"
+            groups="base.group_system"
+            sequence="0"/>
+
+        <menuitem id="lxb-crm.crm_menu_report"
+            name="报表"
+            parent="lxb-crm.crm_menu_root"
+            sequence="20"
+            groups="sales_team.group_sale_manager"/>
+
+        <menuitem id="lxb-crm.crm_team_config"
+            name="销售渠道"
+            parent="lxb-crm.crm_menu_config"
+            action="sales_team.sales_team_config_action"
+            sequence="5"/>
+
+        <menuitem id="lxb-crm.crm_team_menu_config_activity_types"
+            name="活动类型"
+            parent="lxb-crm.crm_menu_config"
+            action="sales_team.mail_activity_type_action_config_sales"
+            sequence="10"/>
+
+        <menuitem id="sales_team_menu_report_crm"
+            name="销售渠道"
+            parent="lxb-crm.crm_menu_report"
+            action="sales_team.crm_team_salesteams_act"
+            sequence="10"/>
+
+
+        <!--
+            Menu Actions客户
+        -->
+        <menuitem
+            id="lxb-crm.crm_menu_pipeline"
+            name="销售漏斗"
+            parent="lxb-crm.crm_menu_root"
+            sequence="1"/>
+
+        <menuitem id="lxb-crm.res_partner_menu_crm"
+            parent="lxb-crm.crm_menu_root"
+                  name="客户"
+            action="base.action_partner_form"
+            sequence="2"/>
+
+        <menuitem
+            id="lxb-crm.menu_crm_leads"
+            name="线索"
+            parent="lxb-crm.crm_menu_pipeline"
+            sequence="1"
+            action="crm.crm_lead_all_leads"
+            groups="crm.group_use_lead"/>
+
+        <menuitem
+            id="lxb-crm.menu_crm_opportunities"
+            action="crm.action_your_pipeline"
+            name="漏斗"
+            parent="lxb-crm.crm_menu_pipeline"
+            sequence="5"/>
+
+        <menuitem
+            id="lxb-crm.menu_crm_lead_categ"
+            name="线索标签"
+            action="crm.crm_lead_tag_action"
+            parent="lxb-crm.menu_crm_config_lead"
+            sequence="1"/>
+
+        <menuitem
+        id="lxb-crm.menu_crm_lead_stage_act"
+        name="阶段"
+        sequence="0"
+        action="crm.crm_stage_action"
+        parent="lxb-crm.menu_crm_config_lead"
+        groups="base.group_no_one"/>
+
+        <!-- 将联系人相关配置设置到系统配置 -->
+        <menuitem
+            id="lxb_crm_contacts_setting"
+            name="联系人相关"
+            parent="lxb-core.menu_system_root"
+            groups="lxb-core.group_lxb_back_office_admin"
+            />
+        <menuitem
+            id="lxb_crm_contacts"
+            name="联系人"
+            action="contacts.action_contacts"
+            parent="lxb_crm_contacts_setting"
+            groups="lxb-core.group_lxb_back_office_admin"
+            />
+        <menuitem
+            id="lxb_crm_contacts_tags"
+            name="联系人标签"
+            action="base.action_partner_category_form"
+            parent="lxb_crm_contacts_setting"
+            groups="lxb-core.group_lxb_back_office_admin"
+            />
+        <menuitem
+            id="lxb_crm_contacts_title"
+            name="联系人称谓"
+            action="base.action_partner_title_contact"
+            parent="lxb_crm_contacts_setting"
+            groups="lxb-core.group_lxb_back_office_admin"
+            />
+        <menuitem
+            id="lxb_crm_contacts_industry"
+            name="联系人行业"
+            action="base.res_partner_industry_action"
+            parent="lxb_crm_contacts_setting"
+            groups="lxb-core.group_lxb_back_office_admin"
+            />
+        <menuitem
+            id="lxb_crm_address_setting"
+            name="地址相关配置"
+            parent="lxb-core.menu_system_root"
+            groups="lxb-core.group_lxb_back_office_admin"
+            />
+        <menuitem
+            id="lxb_crm_address_country"
+            name="国家"
+            action="base.action_country"
+            parent="lxb_crm_address_setting"
+            groups="lxb-core.group_lxb_back_office_admin"
+            />
+        <menuitem
+            id="lxb_crm_address_state"
+            name="州/省"
+            action="base.action_country_state"
+            parent="lxb_crm_address_setting"
+            groups="lxb-core.group_lxb_back_office_admin"
+            />
+        <menuitem
+            id="lxb_crm_address_county_group"
+            name="国家组"
+            action="base.action_country_group"
+            parent="lxb_crm_address_setting"
+            groups="lxb-core.group_lxb_back_office_admin"
+            />
+        <menuitem
+            id="lxb_crm_bank_setting"
+            name="银行相关配置"
+            parent="lxb-core.menu_system_root"
+            groups="lxb-core.group_lxb_back_office_admin"
+            />
+        <menuitem
+            id="lxb_crm_bank"
+            name="银行"
+            action="base.action_res_bank_form"
+            parent="lxb_crm_bank_setting"
+            groups="lxb-core.group_lxb_back_office_admin"
+            />
+        <menuitem
+            id="lxb_crm_bank_account"
+            name="银行账户"
+            action="base.action_res_partner_bank_account_form"
+            parent="lxb_crm_bank_setting"
+            groups="lxb-core.group_lxb_back_office_admin"
+            />
+         <menuitem
+            id="lxb_crm_utm_setting"
+            name="链接跟踪"
+            parent="lxb-core.menu_system_root"
+            groups="lxb-core.group_lxb_back_office_admin"
+            />
+        <menuitem
+            id="lxb_crm_campaign_act"
+            name="营销"
+            action="utm.utm_campaign_act"
+            parent="lxb_crm_utm_setting"
+            groups="lxb-core.group_lxb_back_office_admin"
+            />
+        <menuitem
+            id="lxb_crm_medium_action"
+            name="媒体"
+            action="utm.utm_medium_action"
+            parent="lxb_crm_utm_setting"
+            groups="lxb-core.group_lxb_back_office_admin"
+            />
+        <menuitem
+            id="lxb_crm_source_action"
+            name="来源"
+            action="utm.utm_source_action"
+            parent="lxb_crm_utm_setting"
+            groups="lxb-core.group_lxb_back_office_admin"
+            />
+
+        <!-- 将CRM菜单隐藏 -->
+        <!-- 指定只有hidme用户组才能看到消息菜单 -->
+        <!-- 将CRM菜单隐藏 -->
+        <record id="crm.crm_menu_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('lxb-core.hideme')])]"/>
+        </record>
+        <!-- 将 联系人 菜单隐藏 -->
+         <record id="contacts.menu_contacts" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('lxb-core.hideme')])]"/>
+        </record>
+        <!-- 将 日历 菜单隐藏 -->
+         <record id="calendar.mail_menu_calendar" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('lxb-core.hideme')])]"/>
+        </record>
+        <!-- 将 链接追踪 菜单隐藏 -->
+         <record id="utm.marketing_utm" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('lxb-core.hideme')])]"/>
+        </record>
+
+</odoo>

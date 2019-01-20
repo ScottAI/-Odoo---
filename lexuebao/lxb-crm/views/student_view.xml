@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_lxb_student_form_inherit" model="ir.ui.view">
+            <field name="name">lxb.student.form.crm.inherit</field>
+            <field name="model">lxb.student</field>
+            <field name="inherit_id" ref="lxb-core.view_lxb_student_form"/>
+            <field name="arch" type="xml">
+                <page name="educational" position="after">
+                    <page name="customer_related" string="客户视图信息">
+                        <field name="res_parterner_ids"
+                               context="{'form_view_ref':'lxb-crm.view_lxb_crm_partners_form_inherit'}"/>
+                    </page>
+                </page>
+            </field>
+        </record>
+    </data>
+</odoo>
