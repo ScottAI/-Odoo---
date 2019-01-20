@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="lxb_course_template_tree_view" model="ir.ui.view">
+            <field name="name">lxb.course.template.tree</field>
+            <field name="model">course.template</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <tree string="招生信息">
+                    <field name="name" />
+                    <field name="display_pic"/>
+                    <field name="wxxcx_category_id"/>
+                    <field name="original_price"/>
+                    <field name="recommend_status"/>
+                    <field name="wxxcx_published"/>
+                    <field name="number_good_reputation"/>
+                    <field name="number_fav"/>
+                    <field name="views"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="lxb_course_template_form_view" model="ir.ui.view">
+            <field name="name">lxb.course.template.form</field>
+            <field name="model">course.template</field>
+            <field name="arch" type="xml">
+                <form string="招生信息">
+                    <sheet>
+                        <group col="4">
+                            <field name="enrollment_id" options='{"no_open": True, "no_create": True}'/>
+                            <field name="name"/>
+                            <field name="wxxcx_category_id"/>
+                            <field name="original_price" widget="monetary" readonly="1"/>
+                            <field name="present_price" widget="monetary"/>
+                            <field name="min_price" widget="monetary"/>
+                            <field name="sales_count"/>
+                            <field name="recommend_status"/>
+                            <field name="wxxcx_published"/>
+                            <field name="enrollment_id"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="image" widget="image"/>
+                        </group>
+                        <group col="4" string="小程序信息">
+                            <field name="number_good_reputation" readonly="1"/>
+                            <field name="number_fav" readonly="1"/>
+                            <field name="views" readonly="1"/>
+                        </group>
+                        <notebook>
+                            <page string="商品特色">
+                                <field name="characteristic" nolabel="1"/>
+                            </page>
+                            <page string="小程序描述">
+                                <field name="description_wxapp" nolabel="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="lxb_course_template_search_view" model="ir.ui.view">
+            <field name="name">lxb.course.template.search</field>
+            <field name="model">course.template</field>
+            <field name="arch" type="xml">
+                <search string="招生信息">
+                    <field name="recommend_status" />
+                    <field name="wxxcx_published"/>
+                    <group expand="0" string="分组,按照...">
+                        <filter string="是否推荐" domain="[]"
+                                context="{'group_by':'recommend_status'}"/>
+                        <filter string="是否上架" domain="[]"
+                                context="{'group_by':'wxxcx_published'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="act_open_lxb_course_template_view" model="ir.actions.act_window">
+            <field name="name">招生信息</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">course.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="lxb_course_template_search_view"/>
+            <field name="target">current</field>
+            <field name="res_id">1</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('lxb_course_template_tree_view')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('lxb_course_template_form_view')}),
+                    ]"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem action="act_open_lxb_course_template_view" id="act_window_course_template" name="课程" parent="parent_menu_wxxcx_root" sequence="30"/>
+    </data>
+</odoo>

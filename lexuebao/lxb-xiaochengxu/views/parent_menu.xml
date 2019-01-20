@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="parent_menu_wxxcx_root" name="微信小程序" parent="lxb-crm.crm_menu_root"  sequence="30"/>
+        <menuitem id="parent_menu_327_1536754696" name="设置" parent="parent_menu_wxxcx_root"  sequence="999"/>
+
+    </data>
+</odoo>
